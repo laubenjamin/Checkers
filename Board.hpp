@@ -8,4 +8,5 @@ public:
 
 private:
     sf::RectangleShape squares[8][8]; // 8x8 grid of squares
+    char boardArray [8][8];
 };
