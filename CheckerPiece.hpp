@@ -18,6 +18,7 @@ public:
 
     void changePos(tuple<int, int> posChange) {
         pos = make_tuple(get<0>(pos) + get<0>(posChange), get<1>(pos) + get<1>(posChange));
+        circle.setPosition({get<0>(pos) + get<0>(posChange), get<1>(pos) +get<1>(posChange)});
     }
 
     tuple<int, int> getPos() {
