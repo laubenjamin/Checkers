@@ -6,8 +6,6 @@ class RedPiece : public CheckerPiece {
 public:
     RedPiece(int row, int col) : CheckerPiece(row, col) {
         circle.setFillColor(sf::Color::Red);
-        circle.setOutlineThickness(2);
-        circle.setOutlineColor(sf::Color::White);
         circle.setPosition(sf::Vector2f(4, 4));
     };
 

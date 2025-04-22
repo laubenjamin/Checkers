@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <SFML/Graphics.hpp>
 #include <vector>
 
 using std::tuple;
@@ -13,7 +14,8 @@ public:
     CheckerPiece(int row, int col) :isKing(false) {
         pos = make_tuple(row, col);
         circle.setRadius(46);
-        circle.setFillColor(sf::Color::Black);
+        circle.setOutlineThickness(2);
+        circle.setOutlineColor(sf::Color::White);
     }
 
     void changePos(tuple<int, int> posChange) {
