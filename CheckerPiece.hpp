@@ -51,14 +51,23 @@ public:
         return {};
     }
 
-    virtual vector<tuple<int, int>> getCapture() const {
+    virtual tuple<int, int> getCapture(bool left, bool up) const {
         if (isKing) {
-            return vector<tuple<int, int>>{
-                            {get<0>(pos) - 2, get<1>(pos) - 2},
-                            {get<0>(pos) - 2, get<1>(pos) + 2},
-                            {get<0>(pos) + 2, get<1>(pos) - 2},
-                            {get<0>(pos) + 2, get<1>(pos) + 2}
-            };
+            int row;
+            int col;
+            if (left) {
+                col = get<0>(pos) - 2;
+            }
+            else {
+                col = get<0>(pos) + 2;
+            }
+            if (up) {
+                row = get<1>(pos) - 2;
+            }
+            else {
+                row = get<1>(pos) + 2;
+            }
+            return make_tuple(col, row);
         }
         return {};
     }
@@ -69,6 +78,7 @@ public:
 
 protected:
     sf::CircleShape circle;
+    bool isRed;
     bool isKing;
     tuple<int, int> pos;
 };

@@ -9,44 +9,15 @@ public:
     CheckerPiece* getPieceAt(int row, int col) {
         return pieceArray[row][col];
     }
-    void setFutureMoves() {
-        if (curPiece == nullptr) {
-            return;
-        }
-        else {
-            vector<tuple<int, int>> nextMoves = curPiece->getMove();
-            for (tuple<int, int> temp : nextMoves) {
-                if (pieceArray[get<0>(temp)][get<1>(temp)] != nullptr) {
-                    if (pieceArray[get<0>(temp)][get<1>(temp)]->getisRed() != curPiece->getisRed()) {
-                        tuple
-                    }
-                }
-                else {
-                    futureMoves.
-                }
-            }
-        }
-    }
+    void setFutureMoves();
     void setCurPiece(CheckerPiece* piece) {
         curPiece = piece;
     }
     CheckerPiece* getCurPiece() {
         return curPiece;
     }
-    bool capturePiece(CheckerPiece* piece, int row, int col) {
-        if (pieceArray[row][col] != nullptr) {
-            delete pieceArray[row][col];
-            pieceArray[row][col] = nullptr;
-            return true;
-        }
-        return false;
-    }
-    void movePiece(CheckerPiece* piece, int row, int col) {
-        tuple<int, int> temp = piece->getPos();
-        pieceArray[row][col] = piece;
-        pieceArray[get<0>(temp)][get<1>(temp)] = nullptr;
-        piece->changePos(make_tuple(row, col));
-    }
+    bool capturePiece(CheckerPiece* piece, int row, int col);
+    void movePiece(CheckerPiece* piece, int row, int col);
     bool eligibleMove(int row, int col);
     bool eligibleCapture(int row, int col);
     void changeTurn() {

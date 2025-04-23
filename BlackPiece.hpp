@@ -7,6 +7,7 @@ public:
     BlackPiece(int row, int col) : CheckerPiece(row, col) {
         circle.setFillColor(sf::Color::Black);
         circle.setPosition(sf::Vector2f(row, col));
+        isRed = false;
     };
 
     vector<tuple<int, int>> getMove() {
@@ -18,13 +19,18 @@ public:
                         {get<0>(getPos()) - 1, get<1>(getPos()) + 1}
         };
     }
-    vector<tuple<int, int>> getCapture() {
+    tuple<int, int> getCapture(bool left, bool up) {
         if (isKingPiece()) {
-            return CheckerPiece::getCapture();
+            return CheckerPiece::getCapture(left, up);
         }
-        return vector<tuple<int, int>>{
-                        {get<0>(getPos()) - 2, get<1>(getPos()) - 2},
-                        {get<0>(getPos()) - 2, get<1>(getPos()) + 2}
-        };
+        int row = get<1>(getPos()) + 2;
+        int col;
+        if (left) {
+            col = get<0>(getPos()) - 2;
+        }
+        else {
+            col = get<0>(getPos()) + 2;
+        }
+        return make_tuple(col, row);
     }
 };
