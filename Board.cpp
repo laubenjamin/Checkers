@@ -17,9 +17,9 @@ Board::Board() {
             }
 
             if (boardArray[row][col] == 'b') {
-                pieceArray[row][col] = new BlackPiece(row, col);
+                pieceArray[row][col] = new BlackPiece(col * 100 + 4, row * 100 + 4);
             } else if (boardArray[row][col] == 'r') {
-                pieceArray[row][col] = new RedPiece(row, col);
+                pieceArray[row][col] = new RedPiece(col * 100 + 4, row * 100 + 4);
             } else {
                 pieceArray[row][col] = nullptr; // Empty square
             }
