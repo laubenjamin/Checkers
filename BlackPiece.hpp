@@ -6,7 +6,7 @@ class BlackPiece : public CheckerPiece {
 public:
     BlackPiece(int row, int col) : CheckerPiece(row, col) {
         circle.setFillColor(sf::Color::Black);
-        circle.setPosition(sf::Vector2f(4, 4));
+        circle.setPosition(sf::Vector2f(row, col));
     };
 
     vector<tuple<int, int>> getMove() {

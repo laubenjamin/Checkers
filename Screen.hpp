@@ -23,8 +23,19 @@ class MainMenu : public sf::Drawable {
 
 class GameOver : public sf::Drawable {
     public:
-        GameOver();
-        ~GameOver();
+    GameOver() {
+        sf::Text gameOverText(arial);
+        gameOverText.setString("Game Over\nTo Play Again Press 'R'");
+        gameOverText.setCharacterSize(50);
+        gameOverText.setFillColor(sf::Color(255, 215, 0));
+        gameOverText.setPosition({400, 50});
+        gameOverText.setStyle(sf::Text::Bold);
+        gameOverText.setOutlineColor(sf::Color::Black);
+        gameOverText.setOutlineThickness(2);
+    }
+    ~GameOver();
 
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        target.draw(gameOverText, states);
+    }
 };
