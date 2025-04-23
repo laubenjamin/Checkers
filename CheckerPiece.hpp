@@ -27,6 +27,10 @@ public:
         return pos;
     }
 
+    bool getisRed() {
+        return isRed;
+    }
+
     bool isKingPiece() const {
         return isKing;
     }

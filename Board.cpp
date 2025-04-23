@@ -35,6 +35,34 @@ Board::~Board() {
     }
 }
 
+bool Board::eligibleMove(int row, int col) {
+    if (curPiece == nullptr) {
+        return false;
+    }
+    if (pieceArray[row][col] == nullptr) {
+        for (tuple<int, int> move : futureMoves) {
+            if (get<0>(move) == row && get<1>(move) == col) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Board::eligibleCapture(int row, int col) {
+    if (curPiece == nullptr) {
+        return false;
+    }
+    if (pieceArray[row - 1][col - 1] != nullptr) {
+        for (tuple<int, int> move : futureMoves) {
+            if (get<0>(move) == row && get<1>(move) == col) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
