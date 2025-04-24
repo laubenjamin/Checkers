@@ -1,12 +1,16 @@
 #include <iostream>
 #include "Board.hpp"
+#include "Screen.hpp"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode({1200, 800}), "Checkers Board");
 
     Board board;
 
-    int gameState = 0;
+    MainMenu mainMenu;
+    GameOver gameOver;
+
+    int gameState = 1;
 
     while (window.isOpen()) {
         while (std::optional event = window.pollEvent()) {
@@ -22,39 +26,42 @@ int main() {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 int row = mousePos.y / 100;
                 int col = mousePos.x / 100;
-                if (board.getPieceAt(row, col) != nullptr && board.getCurPiece()) {
-                    if (board.getPieceAt(row, col)->getisRed() == board.getCurTurn()) {
-                        board.setCurPiece(board.getPieceAt(row, col));
-                        board.setFutureMoves(board.getCurPiece()->getMove());
-                    }
+                if (board.getPieceAt(row, col) != nullptr && (board.getPieceAt(row, col)->getisRed() == board.getCurTurn())) {
+                    board.setFutureMoves(true);
+                    board.setCurPiece(board.getPieceAt(row, col));
+                    board.setFutureMoves();
                 }
                 else if (board.getPieceAt(row, col) == nullptr) {
                     if (board.eligibleMove(row, col)) {
-                        board.movePiece(board.getCurPiece(), row, col);
+                        board.movePiece(row, col);
                         board.setCurPiece(nullptr);
+                        board.setFutureMoves(true);
                         board.changeTurn();
                     }
                     if (board.eligibleCapture(row, col)) {
-                        board.capturePiece(board.getCurPiece(), row, col);
+                        board.capturePiece(row, col);
                         board.setCurPiece(nullptr);
+                        board.setFutureMoves(true);
                         board.changeTurn();
                     }
                 }
 
             }
-            else {
-
+            else if (gameState == 3 && event->is<sf::Event::KeyPressed>()) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) {
+                    gameState = 0;
+                }
             }
         }
         window.clear();
         if (gameState == 0) {
-            
+            window.draw(mainMenu);
         }
         else if (gameState == 1) {
             window.draw(board);
         }
         else {
-
+            window.draw(gameOver);
         }
         window.display();
     }

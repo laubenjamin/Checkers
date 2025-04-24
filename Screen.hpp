@@ -4,27 +4,29 @@ sf::Font arial("arial.ttf");
 
 class MainMenu : public sf::Drawable {
     public:
-        MainMenu() {
-            sf::Text title(arial);
+        MainMenu() : title(arial), instructions(arial) {
             title.setString("Checkers");
-            title.setCharacterSize(50);
+            title.setCharacterSize(100);
             title.setFillColor(sf::Color::Red);
             title.setPosition({400, 50});
             title.setStyle(sf::Text::Bold);
-            title.setOutlineColor(sf::Color::Black);
-            title.setOutlineThickness(2);
+            instructions.setString("To Start Press 'Enter'");
+            instructions.setCharacterSize(50);
+            instructions.setFillColor(sf::Color::White);
+            instructions.setPosition({400, 200});
         }
         void draw(sf::RenderTarget& target, sf::RenderStates states) const {
             target.draw(title, states);
+            target.draw(instructions, states);
         }
     private:
         sf::Text title;
+        sf::Text instructions;
 };
 
 class GameOver : public sf::Drawable {
     public:
-    GameOver() {
-        sf::Text gameOverText(arial);
+    GameOver() : gameOverText(arial) {
         gameOverText.setString("Game Over\nTo Play Again Press 'R'");
         gameOverText.setCharacterSize(50);
         gameOverText.setFillColor(sf::Color(255, 215, 0));
@@ -33,9 +35,9 @@ class GameOver : public sf::Drawable {
         gameOverText.setOutlineColor(sf::Color::Black);
         gameOverText.setOutlineThickness(2);
     }
-    ~GameOver();
-
     void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(gameOverText, states);
     }
+    private:
+        sf::Text gameOverText;
 };

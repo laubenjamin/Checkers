@@ -17,9 +17,9 @@ Board::Board() {
             }
 
             if (boardArray[row][col] == 'b') {
-                pieceArray[row][col] = new BlackPiece(col * 100 + 4, row * 100 + 4);
+                pieceArray[row][col] = new BlackPiece(row, col);
             } else if (boardArray[row][col] == 'r') {
-                pieceArray[row][col] = new RedPiece(col * 100 + 4, row * 100 + 4);
+                pieceArray[row][col] = new RedPiece(row, col);
             } else {
                 pieceArray[row][col] = nullptr; // Empty square
             }
@@ -36,7 +36,7 @@ Board::~Board() {
 }
 
 bool Board::eligibleMove(int row, int col) {
-    if (curPiece == nullptr) {
+    if (curPiece == nullptr || (abs(row - get<0>(curPiece->getPos())) != 1)) {
         return false;
     }
     if (pieceArray[row][col] == nullptr) {
@@ -50,10 +50,10 @@ bool Board::eligibleMove(int row, int col) {
 }
 
 bool Board::eligibleCapture(int row, int col) {
-    if (curPiece == nullptr) {
+    if (curPiece == nullptr || (abs(row - get<0>(curPiece->getPos())) != 2)) {
         return false;
     }
-    if (pieceArray[row - 1][col - 1] != nullptr) {
+    if (pieceArray[(row + get<0>(curPiece->getPos()))/2][(col + get<1>(curPiece->getPos()))/2] != nullptr) {
         for (tuple<int, int> move : futureMoves) {
             if (get<0>(move) == row && get<1>(move) == col) {
                 return true;
@@ -63,23 +63,30 @@ bool Board::eligibleCapture(int row, int col) {
     return false;
 }
 
-bool Board::capturePiece(CheckerPiece* piece, int row, int col) {
-    if (pieceArray[row][col] != nullptr) {
-        delete pieceArray[row][col];
-        pieceArray[row][col] = nullptr;
+bool Board::capturePiece(int row, int col) {
+    int captureRow = (row + get<0>(curPiece->getPos())) / 2;
+    int captureCol = (col + get<1>(curPiece->getPos())) / 2;
+    if (pieceArray[captureRow][captureCol] != nullptr) {
+        delete pieceArray[captureRow][captureCol];
+        pieceArray[captureRow][captureCol] = nullptr;
+        movePiece(row, col);
         return true;
     }
     return false;
 }
 
-void Board::movePiece(CheckerPiece* piece, int row, int col) {
-    tuple<int, int> temp = piece->getPos();
-    pieceArray[row][col] = piece;
+void Board::movePiece(int row, int col) {
+    tuple<int, int> temp = curPiece->getPos();
+    pieceArray[row][col] = curPiece;
     pieceArray[get<0>(temp)][get<1>(temp)] = nullptr;
-    piece->changePos(make_tuple(row, col));
+    curPiece->changePos(make_tuple(row, col));
 }
 
-void Board::setFutureMoves() {
+void Board::setFutureMoves(bool clear) {
+    if (clear) {
+        futureMoves.clear();
+        return;
+    }
     if (curPiece == nullptr) {
         return;
     }
@@ -88,15 +95,18 @@ void Board::setFutureMoves() {
         for (tuple<int, int> temp : nextMoves) {
             if (pieceArray[get<0>(temp)][get<1>(temp)] != nullptr) {
                 if (pieceArray[get<0>(temp)][get<1>(temp)]->getisRed() != curPiece->getisRed()) {
-                    bool left;
-                    bool up;
+                    bool left = false;
+                    bool up = false;
                     if ((get<0>(temp) - get<0>(curPiece->getPos())) < 0) {
-                        left = true;
-                    }
-                    if ((get<1>(temp) - get<1>(curPiece->getPos())) < 0) {
                         up = true;
                     }
-                    futureMoves.push_back(curPiece->getCapture(left, up));
+                    if ((get<1>(temp) - get<1>(curPiece->getPos())) < 0) {
+                        left = true;
+                    }
+                    tuple<int, int> tempCapture = curPiece->getCapture(left, up);
+                    if (pieceArray[get<0>(tempCapture)][get<1>(tempCapture)] == nullptr) {
+                        futureMoves.push_back(tempCapture);
+                    }
                 }
             }
             else {
@@ -117,6 +127,14 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             if (pieceArray[row][col] != nullptr) {
                 target.draw(*pieceArray[row][col], states);
             }
+        }
+    }
+    if (!futureMoves.empty()) {
+        for (tuple<int, int> move : futureMoves) {
+            sf::CircleShape circle(20);
+            circle.setFillColor(sf::Color(255, 255, 0, 128));
+            circle.setPosition({static_cast<float>(get<1>(move) * 100 + 30), static_cast<float>(get<0>(move) * 100 + 30)});
+            target.draw(circle, states);
         }
     }
 }

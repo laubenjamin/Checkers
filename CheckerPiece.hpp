@@ -19,15 +19,15 @@ public:
     }
 
     void changePos(tuple<int, int> posChange) {
-        pos = make_tuple(get<0>(pos) + get<0>(posChange), get<1>(pos) + get<1>(posChange));
-        circle.setPosition({get<0>(pos) + get<0>(posChange), get<1>(pos) +get<1>(posChange)});
+        pos = posChange;
+        circle.setPosition({static_cast<float>(get<1>(pos)*100 + 4), static_cast<float>(get<0>(pos)*100+4)});
     }
 
-    tuple<int, int> getPos() {
+    tuple<int, int> getPos() const {
         return pos;
     }
 
-    bool getisRed() {
+    bool getisRed() const {
         return isRed;
     }
 
@@ -56,16 +56,16 @@ public:
             int row;
             int col;
             if (left) {
-                col = get<0>(pos) - 2;
+                col = get<1>(pos) - 2;
             }
             else {
-                col = get<0>(pos) + 2;
+                col = get<1>(pos) + 2;
             }
             if (up) {
-                row = get<1>(pos) - 2;
+                row = get<0>(pos) - 2;
             }
             else {
-                row = get<1>(pos) + 2;
+                row = get<0>(pos) + 2;
             }
             return make_tuple(col, row);
         }

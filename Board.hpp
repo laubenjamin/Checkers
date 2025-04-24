@@ -1,5 +1,10 @@
+#pragma once
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include "CheckerPiece.hpp"
+
+using std::abs;
+
 
 class Board : public sf::Drawable {
 public:
@@ -9,15 +14,15 @@ public:
     CheckerPiece* getPieceAt(int row, int col) {
         return pieceArray[row][col];
     }
-    void setFutureMoves();
+    void setFutureMoves(bool clear = false);
     void setCurPiece(CheckerPiece* piece) {
         curPiece = piece;
     }
     CheckerPiece* getCurPiece() {
         return curPiece;
     }
-    bool capturePiece(CheckerPiece* piece, int row, int col);
-    void movePiece(CheckerPiece* piece, int row, int col);
+    bool capturePiece(int row, int col);
+    void movePiece(int row, int col);
     bool eligibleMove(int row, int col);
     bool eligibleCapture(int row, int col);
     void changeTurn() {
