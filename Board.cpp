@@ -2,7 +2,7 @@
 #include "BlackPiece.hpp"
 #include "RedPiece.hpp" 
 
-Board::Board() : redTurn(arial), blackTurn(arial) {
+Board::Board(sf::Font arial) : redTurn(arial), blackTurn(arial) {
     const float squareSize = 100.0f; // Size of each square
     redTurn.setString("Red's Turn");
     redTurn.setCharacterSize(80);

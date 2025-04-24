@@ -7,19 +7,21 @@ int main() {
 
     std::cout << "Running Tests..." << std::endl;
 
+    sf::Font arial("arial.ttf");
+
     test.testCheckerPieceInitialization();
     test.testCheckerPieceKingPromotion();
-    test.testBoardInitialization();
-    test.testBoardMovePiece();
-    test.testBoardChangeTurn();
+    test.testBoardInitialization(arial);
+    test.testBoardMovePiece(arial);
+    test.testBoardChangeTurn(arial);
 
     std::cout << "All tests completed!" << std::endl;
     sf::RenderWindow window(sf::VideoMode({1200, 800}), "Checkers Board");
 
-    Board board;
+    Board board(arial);
 
-    MainMenu mainMenu;
-    GameOver gameOver;
+    MainMenu mainMenu(arial);
+    GameOver gameOver(arial);
 
     int gameState = 0;
 

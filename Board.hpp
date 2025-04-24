@@ -8,7 +8,7 @@ using std::abs;
 
 class Board : public sf::Drawable {
 public:
-    Board();
+    Board(sf::Font arial);
     ~Board();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     CheckerPiece* getPieceAt(int row, int col) {

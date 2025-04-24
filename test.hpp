@@ -40,8 +40,8 @@ class TestCase {
             printTestResult("CheckerPiece King Promotion", true);
         }
         
-        void testBoardInitialization() {
-            Board board;
+        void testBoardInitialization(sf::Font arial) {
+            Board board(arial);
             assert(board.getNumRedPieces() == 12);
             assert(board.getNumBlackPieces() == 12);
             assert(board.getPieceAt(0, 1) != nullptr);
@@ -50,8 +50,8 @@ class TestCase {
             printTestResult("Board Initialization", true);
         }
         
-        void testBoardMovePiece() {
-            Board board;
+        void testBoardMovePiece(sf::Font arial) {
+            Board board(arial);
             CheckerPiece* piece = board.getPieceAt(5, 0);
             assert(piece != nullptr);
             board.setCurPiece(piece);
@@ -61,8 +61,8 @@ class TestCase {
             printTestResult("Board Move Piece", true);
         }
         
-        void testBoardChangeTurn() {
-            Board board;
+        void testBoardChangeTurn(sf::Font arial) {
+            Board board(arial);
             assert(board.getCurTurn());
             board.changeTurn();
             assert(!board.getCurTurn());

@@ -1,10 +1,9 @@
 #include <SFML/Graphics.hpp>
 
-inline sf::Font arial("arial.ttf");
 
 class MainMenu : public sf::Drawable {
     public:
-        MainMenu() : title(arial), instructions(arial) {
+        MainMenu(sf::Font arial) : title(arial), instructions(arial) {
             title.setString("Checkers");
             title.setCharacterSize(100);
             title.setFillColor(sf::Color::Red);
@@ -26,7 +25,7 @@ class MainMenu : public sf::Drawable {
 
 class GameOver : public sf::Drawable {
     public:
-    GameOver() : gameOverText(arial) {}
+    GameOver(sf::Font arial) : gameOverText(arial) {}
     void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(gameOverText, states);
     }
