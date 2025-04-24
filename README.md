@@ -2,7 +2,7 @@
 Checkers Game
 
 By: Benjamin Lau Lab:05
-By: William Woods Lab:
+By: William Woods Lab:08
 
 Instructions:
     In the Main Menu you can press 'Enter' to start the game

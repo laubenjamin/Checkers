@@ -2,8 +2,18 @@
 #include "BlackPiece.hpp"
 #include "RedPiece.hpp" 
 
-Board::Board() {
+Board::Board() : redTurn(arial), blackTurn(arial) {
     const float squareSize = 100.0f; // Size of each square
+    redTurn.setString("Red's Turn");
+    redTurn.setCharacterSize(80);
+    redTurn.setFillColor(sf::Color::Red);
+    redTurn.setPosition({830, 550});
+    redTurn.setStyle(sf::Text::Bold);
+    blackTurn.setString("Black's Turn");
+    blackTurn.setCharacterSize(70);
+    blackTurn.setFillColor(sf::Color::White);
+    blackTurn.setPosition({820, 150});
+    blackTurn.setStyle(sf::Text::Bold);
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             squares[row][col].setSize(sf::Vector2f(squareSize, squareSize));
@@ -152,6 +162,12 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             circle.setPosition({static_cast<float>(get<1>(move) * 100 + 30), static_cast<float>(get<0>(move) * 100 + 30)});
             target.draw(circle, states);
         }
+    }
+    if (curTurn == true) {
+        target.draw(redTurn, states);
+    }
+    else {
+        target.draw(blackTurn, states);
     }
 }
 

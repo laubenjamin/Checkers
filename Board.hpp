@@ -39,6 +39,8 @@ public:
         return numBlackPieces;
     }
 private:
+    sf::Text redTurn;
+    sf::Text blackTurn;
     int numRedPieces = 12;
     int numBlackPieces = 12;
     bool curTurn = true; // true for red, false for black

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 
-sf::Font arial("arial.ttf");
+inline sf::Font arial("arial.ttf");
 
 class MainMenu : public sf::Drawable {
     public:
