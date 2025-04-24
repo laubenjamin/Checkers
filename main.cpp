@@ -1,8 +1,19 @@
 #include <iostream>
-#include "Board.hpp"
+#include "test.hpp"
 #include "Screen.hpp"
 
 int main() {
+    TestCase test;
+
+    std::cout << "Running Tests..." << std::endl;
+
+    test.testCheckerPieceInitialization();
+    test.testCheckerPieceKingPromotion();
+    test.testBoardInitialization();
+    test.testBoardMovePiece();
+    test.testBoardChangeTurn();
+
+    std::cout << "All tests completed!" << std::endl;
     sf::RenderWindow window(sf::VideoMode({1200, 800}), "Checkers Board");
 
     Board board;
@@ -10,7 +21,7 @@ int main() {
     MainMenu mainMenu;
     GameOver gameOver;
 
-    int gameState = 1;
+    int gameState = 0;
 
     while (window.isOpen()) {
         while (std::optional event = window.pollEvent()) {
