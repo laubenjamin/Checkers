@@ -31,6 +31,7 @@ public:
     bool getCurTurn() {
         return curTurn;
     }
+    bool checkInBounds(tuple<int, int> pos);
 private:
     bool curTurn = true; // true for red, false for black
     vector<tuple<int, int>> futureMoves;

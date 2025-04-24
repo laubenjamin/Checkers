@@ -82,6 +82,13 @@ void Board::movePiece(int row, int col) {
     curPiece->changePos(make_tuple(row, col));
 }
 
+bool Board::checkInBounds(tuple<int, int> pos) {
+    if (get<0>(pos) < 0 || get<0>(pos) > 7 || get<1>(pos) < 0 || get<1>(pos) > 7) {
+        return false;
+    }
+    return true;
+}
+
 void Board::setFutureMoves(bool clear) {
     if (clear) {
         futureMoves.clear();
@@ -93,6 +100,9 @@ void Board::setFutureMoves(bool clear) {
     else {
         vector<tuple<int, int>> nextMoves = curPiece->getMove();
         for (tuple<int, int> temp : nextMoves) {
+            if (!checkInBounds(temp)) {
+                continue;
+            }
             if (pieceArray[get<0>(temp)][get<1>(temp)] != nullptr) {
                 if (pieceArray[get<0>(temp)][get<1>(temp)]->getisRed() != curPiece->getisRed()) {
                     bool left = false;
@@ -104,7 +114,7 @@ void Board::setFutureMoves(bool clear) {
                         left = true;
                     }
                     tuple<int, int> tempCapture = curPiece->getCapture(left, up);
-                    if (pieceArray[get<0>(tempCapture)][get<1>(tempCapture)] == nullptr) {
+                    if (pieceArray[get<0>(tempCapture)][get<1>(tempCapture)] == nullptr && checkInBounds(tempCapture)) {
                         futureMoves.push_back(tempCapture);
                     }
                 }
