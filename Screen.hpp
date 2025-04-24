@@ -26,17 +26,22 @@ class MainMenu : public sf::Drawable {
 
 class GameOver : public sf::Drawable {
     public:
-    GameOver() : gameOverText(arial) {
-        gameOverText.setString("Game Over\nTo Play Again Press 'R'");
+    GameOver() : gameOverText(arial) {}
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        target.draw(gameOverText, states);
+    }
+    void setWinner(bool redWinner) {
+        if (redWinner) {
+            gameOverText.setString("Red Wins!\nPress 'Esc' to Quit");
+        } else {
+            gameOverText.setString("Black Wins!\nPress 'Esc' to Quit");
+        }
         gameOverText.setCharacterSize(50);
         gameOverText.setFillColor(sf::Color(255, 215, 0));
         gameOverText.setPosition({400, 50});
         gameOverText.setStyle(sf::Text::Bold);
         gameOverText.setOutlineColor(sf::Color::Black);
         gameOverText.setOutlineThickness(2);
-    }
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const {
-        target.draw(gameOverText, states);
     }
     private:
         sf::Text gameOverText;

@@ -70,6 +70,12 @@ bool Board::capturePiece(int row, int col) {
         delete pieceArray[captureRow][captureCol];
         pieceArray[captureRow][captureCol] = nullptr;
         movePiece(row, col);
+        if (curTurn) {
+            numBlackPieces--;
+        }
+        else {
+            numRedPieces--;
+        }
         return true;
     }
     return false;

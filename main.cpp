@@ -45,11 +45,20 @@ int main() {
                         board.changeTurn();
                     }
                 }
+                if (board.getNumBlackPieces() == 0 || board.getNumRedPieces() == 0) {
+                    if (board.getNumBlackPieces() == 0) {
+                        gameOver.setWinner(true);
+                    }
+                    else {
+                        gameOver.setWinner(false);
+                    }
+                    gameState = 2;
+                }
 
             }
-            else if (gameState == 3 && event->is<sf::Event::KeyPressed>()) {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) {
-                    gameState = 0;
+            else if (gameState == 2 && event->is<sf::Event::KeyPressed>()) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
+                    window.close();
                 }
             }
         }

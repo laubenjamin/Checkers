@@ -32,7 +32,15 @@ public:
         return curTurn;
     }
     bool checkInBounds(tuple<int, int> pos);
+    int getNumRedPieces() {
+        return numRedPieces;
+    }
+    int getNumBlackPieces() {
+        return numBlackPieces;
+    }
 private:
+    int numRedPieces = 12;
+    int numBlackPieces = 12;
     bool curTurn = true; // true for red, false for black
     vector<tuple<int, int>> futureMoves;
     CheckerPiece* curPiece = nullptr;
