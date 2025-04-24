@@ -10,7 +10,7 @@ int main() {
     MainMenu mainMenu;
     GameOver gameOver;
 
-    int gameState = 0;
+    int gameState = 1;
 
     while (window.isOpen()) {
         while (std::optional event = window.pollEvent()) {
